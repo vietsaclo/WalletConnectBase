@@ -1,5 +1,13 @@
-import axios from 'axios';
+import defaultAxios from 'axios';
 import { IDataAxiosResponse } from "./Interfaces";
+
+// Create instance
+const axios = defaultAxios.create({
+  withCredentials: true,
+  headers: {
+    "Content-type": "application/json",
+  },
+});
 
 let numberLogId = 0;
 
@@ -54,6 +62,18 @@ class Funcs {
         })
         .catch((err) => {
           resolve(Funcs.fun_getErrorAxiosResponse(err));
+        });
+    });
+  };
+
+  static fun_getOriginAxios = async (url: string, config?: any): Promise<any> => {
+    return new Promise((resolve, _reject) => {
+      axios.get(url, config)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          resolve(err);
         });
     });
   };

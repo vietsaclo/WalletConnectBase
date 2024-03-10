@@ -1,4 +1,4 @@
-import { useAccount, useWalletClient } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { Apis } from '../utils';
 import abiContractMintNFTsCat from '../utils/abi/abi_MintNFTsCat.json';
 import UseWalletConnectedHook from './UseWalletConnectedHook';
@@ -19,23 +19,18 @@ const UseContractMintNFTsCatHook = () => {
     return contractConnect;
   }
 
-  const UseGetContractMintNFTs = (provider: BrowserProvider, signer: ethers.JsonRpcSigner) => {
+  const UseGetContractMintNFTs = async (walletClient: WalletClient) => {
+    const provider = UseGetProvider(walletClient);
+    const signer = await UseGetSigner(walletClient);
     return UseGetContractAndConnectSigner(Apis.ADDRESSs.CONTRACT_MINT_NFT_CAT, abiContractMintNFTsCat, provider, signer);
   }
 
   const UseGetInventoryOf = async (walletClient: WalletClient) => {
-    const provider = UseGetProvider(walletClient);
-    const signer = await UseGetSigner(walletClient);
-    const contractMint: any = UseGetContractMintNFTs(provider, signer);
+    const contractMint: any = await UseGetContractMintNFTs(walletClient);
 
     // get inventory
     const inventory = await contractMint.getInventoryOf(userAddress);
-    const result = [];
-    for (let i = 0; i < inventory.length; i++) {
-      result.push(Number(inventory[i].toString()));
-    }
-
-    return result;
+    return Apis.convertUint256AraayToArray(inventory);
   }
 
   return {
