@@ -5,3 +5,8 @@ export interface IDataAxiosResponse {
   error?: any,
   total?: number,
 }
+
+export interface I_GlobalApp {
+  isLoading?: boolean,
+  headerMenu: string,
+}

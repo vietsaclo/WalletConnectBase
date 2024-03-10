@@ -18,6 +18,9 @@ const LoginPage = loadable(() => import('./login-page/LoginPage'), {
 const HomePage = loadable(() => import('./home-page/HomePage'), {
   fallback: <LoadingTopPageFallBack />,
 });
+const InventoryPage = loadable(() => import('./inventory-page/InventoryPage'), {
+  fallback: <LoadingTopPageFallBack />,
+});
 
 interface PageRoute {
   path: string,
@@ -45,6 +48,11 @@ const App: React.FC = () => {
     {
       path: '/login',
       element: <LoginPage />,
+      children: [],
+    },
+    {
+      path: '/inventory',
+      element: <InventoryPage />,
       children: [],
     },
   ];

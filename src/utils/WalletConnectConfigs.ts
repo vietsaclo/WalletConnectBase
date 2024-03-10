@@ -8,7 +8,7 @@ import { QueryClient } from '@tanstack/react-query'
 // 0. Setup queryClient for WAGMIv2
 const myQueryClient = new QueryClient()
 
-const projectId = 'f78180a8e45ede6927e3eeda2335c600';
+const projectId = String(process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID);
 if (!projectId) {
   throw new Error('VITE_PROJECT_ID is not set')
 }
@@ -31,8 +31,10 @@ createWeb3Modal({
   projectId,
   themeMode: 'light',
   themeVariables: {
-    '--w3m-color-mix': '#00DCFF',
-    '--w3m-color-mix-strength': 20
+    // '--w3m-color-mix': '#00DCFF',
+    // '--w3m-color-mix-strength': 20
+    '--w3m-color-mix': 'black',
+    '--w3m-color-mix-strength': 0
   }
 })
 

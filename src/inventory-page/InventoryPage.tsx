@@ -1,17 +1,17 @@
 import React from 'react';
 import Header from '../components/common/Header';
-import MintNFTs from '../components/home-page/MintNFTs';
+import MyInventory from '../components/home-page/MyInventory';
 
-const HomePage: React.FC = () => {
+const InventoryPage: React.FC = () => {
   return (
     <>
       <div className='header'>
         <Header />
       </div>
 
-      <MintNFTs />
+      <MyInventory />
     </>
   );
 };
 
-export default React.memo(HomePage);
+export default React.memo(InventoryPage);

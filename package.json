@@ -37,9 +37,9 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "GENERATE_SOURCEMAP=false react-scripts start",
+    "start": "DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts start",
     "start:dev": "yarn && yarn start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
