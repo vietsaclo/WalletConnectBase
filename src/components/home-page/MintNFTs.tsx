@@ -1,4 +1,4 @@
-import { useWalletClient } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 import UseContractMintNFTsCatHook from "../../hooks/UseContractMintNFTsCatHook";
 import { Funcs, UI } from "../../utils";
 import { Tag } from "antd";
@@ -12,6 +12,7 @@ let RANDOM_JSON_ID_FOUND = 0;
 
 const MintNFTs = () => {
   const { data: walletClient } = useWalletClient();
+  const { isConnected } = useAccount();
   const { UseRandomJsonId, UseMintNFT, UseGetPRICE_PER_MINT } = UseContractMintNFTsCatHook();
   const [randomIdText, setRandomIdText] = useState<string>('Random NFT');
   const [loading, setLoading] = useState<boolean>(false);
@@ -33,6 +34,12 @@ const MintNFTs = () => {
       UI.toastError('Please reload website!');
       return;
     }
+    // check connected ?
+    if (!isConnected) {
+      UI.toastError('Connect wallet require!');
+      return;
+    }
+
     // loading
     setHash('');
     LOADING_RANDOM = true;
@@ -105,7 +112,7 @@ const MintNFTs = () => {
           {hash && (
             <div className="mt-5">
               <span className="fw-bold text-success">Mint Success!&nbsp;</span>
-              <a target="_blank" href={`${ENVs.BLOCK_SCAN_EXPLORER.replace(':hash', hash)}`} className="card-link">View On Scan Exploer</a>
+              <a target="_blank" href={`${ENVs.BLOCK_SCAN_EXPLORER.replace(':hash', hash)}`} className="card-link">View On Scan Explore</a>
             </div>
           )}
         </div>
