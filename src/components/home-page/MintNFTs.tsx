@@ -1,21 +1,56 @@
 import { useWalletClient } from "wagmi";
 import UseContractMintNFTsCatHook from "../../hooks/UseContractMintNFTsCatHook";
-import { UI } from "../../utils";
+import { Funcs, UI } from "../../utils";
 import { Tag } from "antd";
+import { ENVs } from "../../utils/Consts";
+import { useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+
+let LOADING_RANDOM = false;
+let RANDOM_JSON_ID_FOUND = 0;
 
 const MintNFTs = () => {
   const { data: walletClient } = useWalletClient();
-  const { UseMintNFT } = UseContractMintNFTsCatHook();
+  const { UseRandomJsonId, UseMintNFT } = UseContractMintNFTsCatHook();
+  const [randomIdText, setRandomIdText] = useState<string>('Random NFT');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hash, setHash] = useState<string>('');
+
+  const startRandomUI = async (onFinished: Function) => {
+    let count = 0;
+    do {
+      setRandomIdText(Funcs.fun_randomMinMax(0, ENVs.TOTAL_SUPPLY_NFTs).toString());
+      count += 1;
+      await Funcs.fun_sleep(1);
+    } while (count < 300 || LOADING_RANDOM);
+    onFinished();
+  }
 
   const btnMintCliced = async () => {
     if (!walletClient) {
       UI.toastError('Please reload website!');
       return;
     }
-    const idJson = 4;// random
-    const mint = await UseMintNFT(walletClient, idJson);
-    console.log(mint);
 
+    setHash('');
+    LOADING_RANDOM = true;
+    setLoading(true);
+    startRandomUI(onRandomFinished);
+    RANDOM_JSON_ID_FOUND = await UseRandomJsonId(walletClient);
+    LOADING_RANDOM = false;
+  }
+
+  const onRandomFinished = async () => {
+    if (!walletClient) {
+      UI.toastError('Please reload website!');
+      return;
+    }
+
+    setRandomIdText(RANDOM_JSON_ID_FOUND.toString());
+    const minted = await UseMintNFT(walletClient, RANDOM_JSON_ID_FOUND);
+    setHash(minted.hash);
+    setLoading(false);
+    setRandomIdText('Random NFT');
   }
 
   return (
@@ -30,7 +65,7 @@ const MintNFTs = () => {
                 color: 'ActiveBorder',
                 fontSize: '30px',
               }}>
-                Random NFT
+                {randomIdText}
               </div>
               <div className="card-body">
                 <h5 className="card-title">Mint NFT</h5>
@@ -40,12 +75,22 @@ const MintNFTs = () => {
                 <Tag color="cyan">Fee: 0.0001 Ether</Tag>
               </div>
               <div className="card-footer">
-                <button onClick={btnMintCliced} className="btn btn-outline-danger w-100">
-                  Mint NFTs
+                <button disabled={loading} onClick={btnMintCliced} className="btn btn-outline-danger w-100">
+                  Mint NFTs&nbsp;
+                  {loading && (<span><LoadingOutlined /></span>)}
                 </button>
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="text-center">
+          {hash && (
+            <div className="mt-5">
+              <span className="fw-bold text-success">Mint Success!&nbsp;</span>
+              <a target="_blank" href={`${ENVs.BLOCK_SCAN_EXPLORER.replace(':hash', hash)}`} className="card-link">View On Scan Exploer</a>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import UseContractMintNFTsCatHook from "../../hooks/UseContractMintNFTsCatHook";
-import { useWalletClient } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 import { Apis, Funcs } from "../../utils";
 import { Skeleton, Space } from "antd";
 
 const MyInventory = () => {
   const { UseGetInventoryOf } = UseContractMintNFTsCatHook();
   const { data: walletClient } = useWalletClient();
+  const { isConnected } = useAccount();
   const [inventory, setInventory] = useState<any[]>([]);
   const [inventoryIds, setInventoryIds] = useState<number[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -102,6 +103,8 @@ const MyInventory = () => {
     <div className="container">
       <div className="row mt-5 pb-5">
         {loading ? renderInventoryIds() : renderInventory()}
+        {!isConnected && (<h3 className="text-danger">Connect wallet require!</h3>)}
+        {(!loading && !inventory.length && isConnected) && (<h3 className="text-secondary">Empty NFTs!</h3>)}
       </div>
     </div>
   );

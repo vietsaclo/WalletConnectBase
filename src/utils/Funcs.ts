@@ -113,6 +113,23 @@ class Funcs {
         });
     });
   };
+
+  /**
+   * Returns a random number between min (inclusive) and max (exclusive)
+   */
+  static fun_randomMinMax(min: number, max: number) {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+  }
+
+  static fun_sleep = (milis: number) => {
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, milis);
+    })
+  }
 }
 
 export default Funcs;
