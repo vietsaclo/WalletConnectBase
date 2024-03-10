@@ -5,16 +5,18 @@ import { Tag } from "antd";
 import { ENVs } from "../../utils/Consts";
 import { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
+import UseWalletConnectedHook from "../../hooks/UseWalletConnectedHook";
 
 let LOADING_RANDOM = false;
 let RANDOM_JSON_ID_FOUND = 0;
 
 const MintNFTs = () => {
   const { data: walletClient } = useWalletClient();
-  const { UseRandomJsonId, UseMintNFT } = UseContractMintNFTsCatHook();
+  const { UseRandomJsonId, UseMintNFT, UseGetPRICE_PER_MINT } = UseContractMintNFTsCatHook();
   const [randomIdText, setRandomIdText] = useState<string>('Random NFT');
   const [loading, setLoading] = useState<boolean>(false);
   const [hash, setHash] = useState<string>('');
+  const { UseGetUserBalance } = UseWalletConnectedHook();
 
   const startRandomUI = async (onFinished: Function) => {
     let count = 0;
@@ -31,10 +33,21 @@ const MintNFTs = () => {
       UI.toastError('Please reload website!');
       return;
     }
-
+    // loading
     setHash('');
     LOADING_RANDOM = true;
     setLoading(true);
+
+    // check balance
+    const pricePerMint = await UseGetPRICE_PER_MINT(walletClient);
+    const userBalance = UseGetUserBalance();
+    if (userBalance < pricePerMint) {
+      UI.toastError(`Insufficient balance`);
+      LOADING_RANDOM = false;
+      setLoading(false);
+      return;
+    }
+
     startRandomUI(onRandomFinished);
     RANDOM_JSON_ID_FOUND = await UseRandomJsonId(walletClient);
     LOADING_RANDOM = false;
@@ -48,9 +61,13 @@ const MintNFTs = () => {
 
     setRandomIdText(RANDOM_JSON_ID_FOUND.toString());
     const minted = await UseMintNFT(walletClient, RANDOM_JSON_ID_FOUND);
-    setHash(minted.hash);
     setLoading(false);
     setRandomIdText('Random NFT');
+    if (!minted) {
+      UI.toastError('Mint NFT Failed!');
+      return;
+    }
+    setHash(minted.hash);
   }
 
   return (

@@ -3,6 +3,7 @@ import UseContractMintNFTsCatHook from "../../hooks/UseContractMintNFTsCatHook";
 import { useAccount, useWalletClient } from "wagmi";
 import { Apis, Funcs } from "../../utils";
 import { Skeleton, Space } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const MyInventory = () => {
   const { UseGetInventoryOf } = UseContractMintNFTsCatHook();
@@ -36,7 +37,7 @@ const MyInventory = () => {
   const renderInventory = () => {
     return inventory.map((v, k) => {
       return (
-        <div key={k} className="col-12 col-md-3">
+        <div key={k} className="col-12 col-md-3 mb-4">
           <div className="card">
             <img src={v.Image} className="card-img-top" alt={v.Outfit} />
             <div className="card-body">
@@ -69,7 +70,7 @@ const MyInventory = () => {
   const renderInventoryIds = () => {
     return inventoryIds.map((v, k) => {
       return (
-        <div key={k} className="col-12 col-md-3">
+        <div key={k} className="col-12 col-md-3 mb-4">
           <div className="card">
             <Skeleton.Image className="w-100" style={{ height: '300px' }} active={true} />
             <div className="card-body">
@@ -105,6 +106,7 @@ const MyInventory = () => {
         {loading ? renderInventoryIds() : renderInventory()}
         {!isConnected && (<h3 className="text-danger">Connect wallet require!</h3>)}
         {(!loading && !inventory.length && isConnected) && (<h3 className="text-secondary">Empty NFTs!</h3>)}
+        {(loading && !inventoryIds.length) && (<LoadingOutlined />)}
       </div>
     </div>
   );

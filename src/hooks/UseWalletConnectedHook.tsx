@@ -1,7 +1,11 @@
 import { ethers } from "ethers";
 import { WalletClient } from "viem";
+import { useAccount, useBalance } from "wagmi";
 
 const UseWalletConnectedHook = () => {
+  const { address: userAddress, isConnected } = useAccount();
+  const { data: userBalance } = useBalance({ address: userAddress });
+
   const UseGetProvider = (client: WalletClient) => {
     const { chain, transport } = client;
     const network = {
@@ -21,9 +25,16 @@ const UseWalletConnectedHook = () => {
     return signer;
   }
 
+  const UseGetUserBalance = () => {
+    if (!isConnected) return 0;
+    const balance: any = userBalance?.value;
+    return Number(ethers.formatEther(balance));
+  }
+
   return {
     UseGetProvider,
     UseGetSigner,
+    UseGetUserBalance,
   }
 }
 

@@ -40,6 +40,8 @@ const UseContractMintNFTsCatHook = () => {
     // mint NFT
     const mint = await contractMint.mintNFT(idJson, {
       value: ethers.parseEther('0.0001'),
+    }).catch((_error: any) => {
+      return null;
     });
     return mint;
   }
@@ -84,11 +86,20 @@ const UseContractMintNFTsCatHook = () => {
     return randomId;
   }
 
+  const UseGetPRICE_PER_MINT = async (walletClient: WalletClient) => {
+    const contractMint: any = await UseGetContractMintNFTs(walletClient);
+
+    // get PRICE_PER_MINT
+    const price = await contractMint.PRICE_PER_MINT();
+    return Number(ethers.formatEther(price));
+  }
+
   return {
     UseGetInventoryOf,
     UseGetContractMintNFTs,
     UseMintNFT,
     UseRandomJsonId,
+    UseGetPRICE_PER_MINT,
   }
 }
 
