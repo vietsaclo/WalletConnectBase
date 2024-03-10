@@ -41,6 +41,7 @@
     "start": "DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts start",
     "start:dev": "yarn && yarn start",
     "build": "DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build",
+    "build:prod": "cat .env.prod > .env && yarn build && cat .env.dev > .env",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
