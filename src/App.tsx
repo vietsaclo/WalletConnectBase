@@ -3,9 +3,11 @@ import './App.css';
 import { useRoutes } from 'react-router-dom';
 import loadable from '@loadable/component';
 import LoadingTopPageFallBack from './components/common/LoadingTopPageFallback';
-import SelectLang from './components/common/SelectLang';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { WagmiProvider } from 'wagmi'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { myQueryClient, myWagmiConfig } from './utils/WalletConnectConfigs';
 
 const PageNotFoundView = loadable(() => import('./other-pages/PageNotFoundView'), {
   fallback: <LoadingTopPageFallBack />,
@@ -50,8 +52,7 @@ const App: React.FC = () => {
   const routing = useRoutes(listRoute);
 
   return (
-    <div className='p-1'>
-      <SelectLang />
+    <div>
       <ToastContainer
         position="bottom-left"
         autoClose={3000}
@@ -63,7 +64,11 @@ const App: React.FC = () => {
         draggable
         pauseOnHover
         theme='dark' />
-      {routing}
+      <WagmiProvider config={myWagmiConfig}>
+        <QueryClientProvider client={myQueryClient}>
+          {routing}
+        </QueryClientProvider>
+      </WagmiProvider>
     </div>
   );
 }
