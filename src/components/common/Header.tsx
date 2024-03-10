@@ -32,7 +32,7 @@ const Header = () => {
             </li>
           </ul>
           <div className="d-flex">
-            <w3m-network-button />
+            <w3m-network-button />&nbsp;
             <w3m-button />
           </div>
         </div>

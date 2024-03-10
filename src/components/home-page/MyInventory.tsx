@@ -66,7 +66,7 @@ const MyInventory = () => {
   }
 
   const renderInventoryIds = () => {
-    return inventory.map((v, k) => {
+    return inventoryIds.map((v, k) => {
       return (
         <div key={k} className="col-12 col-md-3">
           <div className="card">

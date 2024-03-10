@@ -26,3 +26,13 @@
 span[role="link"] {
   cursor: pointer;
 }
+
+.center-element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-mint {
+  width: 18rem;
+}

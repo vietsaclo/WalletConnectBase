@@ -33,9 +33,20 @@ const UseContractMintNFTsCatHook = () => {
     return Apis.convertUint256AraayToArray(inventory);
   }
 
+  const UseMintNFT = async (walletClient: WalletClient, idJson: number) => {
+    const contractMint: any = await UseGetContractMintNFTs(walletClient);
+
+    // mint NFT
+    const mint = await contractMint.mintNFT(idJson, {
+      value: ethers.parseEther('0.0001'),
+    });
+    return mint;
+  }
+
   return {
     UseGetInventoryOf,
     UseGetContractMintNFTs,
+    UseMintNFT,
   }
 }
 
