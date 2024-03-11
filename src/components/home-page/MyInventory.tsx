@@ -39,7 +39,7 @@ const MyInventory = () => {
       return (
         <div key={k} className="col-12 col-md-3 mb-4">
           <div className="card">
-            <img src={v.Image} className="card-img-top" alt={v.Outfit} />
+            <img style={{ minHeight: '324px' }} src={v.Image} className="card-img-top" alt={v.Outfit} />
             <div className="card-body">
               <h5 className="card-title">Headgear</h5>
               <p className="card-text">
@@ -72,7 +72,7 @@ const MyInventory = () => {
       return (
         <div key={k} className="col-12 col-md-3 mb-4">
           <div className="card">
-            <Skeleton.Image className="w-100" style={{ height: '300px' }} active={true} />
+            <Skeleton.Image className="w-100" style={{ minHeight: '324px' }} active={true} />
             <div className="card-body">
               <h5 className="card-title">Headgear</h5>
               <p className="card-text">

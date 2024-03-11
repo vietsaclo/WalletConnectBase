@@ -3,12 +3,15 @@ import UseContractMintNFTsCatHook from "../../hooks/UseContractMintNFTsCatHook";
 import { Funcs, UI } from "../../utils";
 import { Tag } from "antd";
 import { ENVs } from "../../utils/Consts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import UseWalletConnectedHook from "../../hooks/UseWalletConnectedHook";
+import Confetti from 'react-confetti';
+import UseCommomHook from "../../hooks/UseCommonHook";
 
 let LOADING_RANDOM = false;
 let RANDOM_JSON_ID_FOUND = 0;
+let CONFETTI_TIME = 5;
 
 const MintNFTs = () => {
   const { data: walletClient } = useWalletClient();
@@ -18,6 +21,9 @@ const MintNFTs = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hash, setHash] = useState<string>('');
   const { UseGetUserBalance } = UseWalletConnectedHook();
+  const { UseWindowDimensions } = UseCommomHook();
+  const windowSize = UseWindowDimensions();
+  const [confetti, setConfetti] = useState<number>(0);
 
   const startRandomUI = async (onFinished: Function) => {
     let count = 0;
@@ -30,6 +36,8 @@ const MintNFTs = () => {
   }
 
   const btnMintCliced = async () => {
+    if (confetti >= 0.001) return;
+
     if (!walletClient) {
       UI.toastError('Please reload website!');
       return;
@@ -75,10 +83,30 @@ const MintNFTs = () => {
       return;
     }
     setHash(minted.hash);
+    hanldeConfetti();
+  }
+
+  const hanldeConfetti = async () => {
+    setConfetti(CONFETTI_TIME);
+    let count = CONFETTI_TIME;
+    const minus = 0.05;
+    const sleep = 50;
+    do {
+      setConfetti(count - minus);
+      count -= minus;
+      await Funcs.fun_sleep(sleep);
+    } while (count > 0);
   }
 
   return (
     <div className="container">
+      {confetti > 0 && (
+        <Confetti
+          width={windowSize.width}
+          height={windowSize.height}
+          opacity={confetti / CONFETTI_TIME}
+        />
+      )}
       <div className="mt-5 pb-5">
         <div className="center-element">
           <div className="box-mint">
