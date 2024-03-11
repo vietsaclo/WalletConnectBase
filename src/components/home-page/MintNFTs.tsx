@@ -38,13 +38,13 @@ const MintNFTs = () => {
   const btnMintCliced = async () => {
     if (confetti >= 0.001) return;
 
-    if (!walletClient) {
-      UI.toastError('Please reload website!');
-      return;
-    }
     // check connected ?
     if (!isConnected) {
       UI.toastError('Connect wallet require!');
+      return;
+    }
+    if (!walletClient) {
+      UI.toastError('Please reload website!');
       return;
     }
 
