@@ -5,11 +5,13 @@ import MintNFTs from '../components/home-page/MintNFTs';
 const HomePage: React.FC = () => {
   return (
     <>
-      <div className='header'>
-        <Header />
-      </div>
+      <main>
+        <div className='header'>
+          <Header />
+        </div>
 
-      <MintNFTs />
+        <MintNFTs />
+      </main>
     </>
   );
 };

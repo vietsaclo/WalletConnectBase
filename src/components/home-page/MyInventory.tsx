@@ -101,12 +101,14 @@ const MyInventory = () => {
   }
 
   return (
-    <div className="container">
-      <div className="row mt-5 pb-5">
-        {loading ? renderInventoryIds() : renderInventory()}
-        {!isConnected && (<h3 className="text-danger">Connect wallet require!</h3>)}
-        {(!loading && !inventory.length && isConnected) && (<h3 className="text-secondary">Empty NFTs!</h3>)}
-        {(loading && !inventoryIds.length) && (<LoadingOutlined />)}
+    <div className="inventory-page">
+      <div className="container">
+        <div className="row mt-5 pb-5">
+          {loading ? renderInventoryIds() : renderInventory()}
+          {!isConnected && (<h3 className="text-danger">Connect wallet require!</h3>)}
+          {(!loading && !inventory.length && isConnected) && (<h3 className="text-secondary">Empty NFTs!</h3>)}
+          {(loading && !inventoryIds.length) && (<LoadingOutlined />)}
+        </div>
       </div>
     </div>
   );

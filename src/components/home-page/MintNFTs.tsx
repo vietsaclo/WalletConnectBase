@@ -99,40 +99,46 @@ const MintNFTs = () => {
   }
 
   return (
-    <div className="container">
-      {confetti > 0 && (
-        <Confetti
-          width={windowSize.width}
-          height={windowSize.height}
-          opacity={confetti / CONFETTI_TIME}
-        />
-      )}
-      <div className="mt-5 pb-5">
-        <div className="center-element">
-          <div className="box-mint">
-            <div className="card" style={{ width: "18rem" }}>
-              <div className="w-100 center-element fw-bold" style={{
-                height: '200px',
-                backgroundColor: '#f1f1f1',
-                color: 'ActiveBorder',
-                fontSize: '30px',
-              }}>
-                {randomIdText}
-              </div>
-              <div className="card-body">
-                <h5 className="card-title">Mint NFT</h5>
-                <p className="card-text">
-                  Mint NFT K-Cats, Touch the button below and enjoy your meal.
-                </p>
-                <Tag color="cyan">Fee: 0.0001 Ether</Tag>
-              </div>
-              <div className="card-footer">
-                <button disabled={loading} onClick={btnMintCliced} className="btn btn-outline-danger w-100">
-                  Mint NFTs&nbsp;
-                  {loading && (<span><LoadingOutlined /></span>)}
-                </button>
-              </div>
+    <main className="mint-page">
+      <div className="container">
+        {confetti > 0 && (
+          <Confetti
+            width={windowSize.width}
+            height={windowSize.height}
+            opacity={confetti / CONFETTI_TIME}
+          />
+        )}
+        {/* <div className="mint-page__ttl">
+          <img src="/assets/images/logo-mint.png" alt="logo-mint" />
+        </div> */}
+
+        <div className="mint-box d-flex align-items-center justify-content-center">
+          <p className="mint-v3_chose text-center">Mint NFT K-Cats<span className="noti">Touch the button below and enjoy your meal.</span></p>
+        </div>
+
+
+        <div className="text-center">
+          <div className="d-flex flex-column align-items-center">
+            <div className="center-element text-center fw-bold" style={{
+              width: '18rem',
+              height: '86px',
+              backgroundColor: "wheat",
+              color: 'ActiveBorder',
+              fontSize: '30px',
+              borderRadius: '20px'
+            }}>
+              {randomIdText}
             </div>
+            <div className="mt-3">
+              <button disabled={loading} onClick={btnMintCliced} className="btn btn-mint">
+                Mint NFTs&nbsp;
+                {loading && (<span><LoadingOutlined /></span>)}
+              </button>
+            </div>
+          </div>
+          <div className="fw-bold mt-3">
+            Total estimated cost (fees included) :
+            <span className="ms-2"><Tag color="cyan">Fee: 0.0001 Ether</Tag></span>
           </div>
         </div>
 
@@ -145,7 +151,7 @@ const MintNFTs = () => {
           )}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
