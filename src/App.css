@@ -13,6 +13,11 @@ svg {
   font-weight: bold;
 }
 
+body {
+  background-color: #fdf9f4;
+  margin: 0;
+}
+
 .navbar {
   /* padding-top: 1.8rem;
   padding-bottom: 1.8rem; */
@@ -102,4 +107,95 @@ svg {
 
 .inventory-page {
   padding: 5rem 0;
+}
+
+.inventory-page__ttl {
+  font-family: "Comicon", sans-serif;
+}
+
+.font-sec {
+  font-family: "Comicon", sans-serif;
+}
+
+.inventory-card {
+  padding: 12px;
+  border-radius: 18px;
+  border: 2px solid #fcf2f2;
+  box-shadow: inset -2px -2px 4px 0 hsla(0, 0%, 100%, 0.749),
+    inset 2px 2px 4px 0 rgba(246, 235, 235, 0.749);
+}
+
+.inventory-card:hover {
+  cursor: pointer;
+  box-shadow: inset -2px -2px 4px 0 hsla(0, 0%, 100%, 0.749),
+    inset 2px 2px 4px 0 #fdbe9a;
+  transition: 0.5s;
+}
+
+.card-img-top {
+  border-radius: 16px;
+}
+
+.inventory-card__ttl {
+  padding: 0px 4px;
+}
+
+.inventory-card .accordion-item {
+  border: 0;
+}
+
+.inventory-card .accordion-button {
+  border: 0;
+  padding: 16px 4px;
+}
+
+.inventory-card .accordion-button:not(.collapsed) {
+  color: #000;
+  background-color: transparent;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+}
+
+.inventory-card .accordion-body {
+  padding: 10px 4px;
+}
+
+.btn-listing-nft {
+  max-width: 70%;
+  max-height: 48px;
+  background-color: #fc792f;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-listing-nft:hover {
+  background-color: #f4630f;
+  color: whitesmoke;
+  border: 1px solid brown;
+}
+
+.btn-send-nft {
+  background-color: #f2f1f0;
+  color: gray;
+  max-height: 48px;
+  padding: 10px 20px;
+  font-weight: 500;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-send-nft:hover {
+  background-color: brown;
+  color: white;
+  font-weight: 600;
+}
+
+.fw-light {
+  font-weight: 300;
 }

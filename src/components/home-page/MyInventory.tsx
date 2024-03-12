@@ -37,29 +37,43 @@ const MyInventory = () => {
   const renderInventory = () => {
     return inventory.map((v, k) => {
       return (
-        <div key={k} className="col-12 col-md-3 mb-4">
-          <div className="card">
+        <div key={k} className="col-12 col-md-6 col-lg-3 mb-4">
+          <div className="card inventory-card">
             <img style={{ minHeight: '324px' }} src={v.Image} className="card-img-top" alt={v.Outfit} />
-            <div className="card-body">
-              <h5 className="card-title">Headgear</h5>
-              <p className="card-text">
+            <div className="mt-3 mb-1 inventory-card__ttl d-flex align-items-center justify-content-between">
+              <p className="card-title mb-0">Headgear</p>
+              <p className="card-text inventory-page__ttl">
                 {v.Headgear}
               </p>
             </div>
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item">Background: {v.Background}</li>
-              <li className="list-group-item">Equipment: {v.Equipment}</li>
-              <li className="list-group-item">Eyes: {v.Eyes}</li>
-            </ul>
-            <div className="card-body">
-              <Space>
-                <button className="btn btn-outline-secondary">
-                  Sent To...
-                </button>
-                <button className="btn btn-outline-success">
-                  Listing on market
-                </button>
-              </Space>
+            <div className="accordion" id={`accordion${k}`}>
+              <div className="accordion-item">
+                <h2 className="accordion-header" id={`heading${k}`}>
+                  <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${k}`} aria-expanded="true" aria-controls={`collapse${k}`}>
+                    <span className="fw-light">Background:</span> <span className="font-sec ms-auto">{v.Background}</span>
+                  </button>
+                </h2>
+                <div id={`collapse${k}`} className="accordion-collapse collapse" aria-labelledby={`heading${k}`} data-bs-parent={`#accordion${k}`}>
+                  <div className="accordion-body">
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div className="fw-light">Equipment:</div>
+                      <span className="font-sec">{v.Equipment}</span>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div className="fw-light">Eyes:</div>
+                      <span className="font-sec">{v.Eyes}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-1 d-flex align-items-center justify-content-between">
+              <button className="btn btn-send-nft">
+                Sent to ...
+              </button>
+              <button className="btn btn-listing-nft">
+                List on market
+              </button>
             </div>
           </div>
         </div>
@@ -70,32 +84,46 @@ const MyInventory = () => {
   const renderInventoryIds = () => {
     return inventoryIds.map((v, k) => {
       return (
-        <div key={k} className="col-12 col-md-3 mb-4">
-          <div className="card">
-            <Skeleton.Image className="w-100" style={{ minHeight: '324px' }} active={true} />
-            <div className="card-body">
-              <h5 className="card-title">Headgear</h5>
-              <p className="card-text">
-                ...
+        <div key={k} className="col-12 col-md-6 col-lg-3 mb-4">
+          <div className="card inventory-card">
+            <Skeleton.Image className="w-100" style={{ minHeight: '324px', borderRadius: '16px' }} active={true} />
+            <div className="mt-3 mb-1 inventory-card__ttl d-flex align-items-center justify-content-between">
+              <p className="card-title mb-0">Headgear</p>
+              <p className="card-text inventory-page__ttl">
+                Headgear
               </p>
             </div>
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item">Background: ...</li>
-              <li className="list-group-item">Equipment: ...</li>
-              <li className="list-group-item">Eyes: ...</li>
-            </ul>
-            <div className="card-body">
-              <Space>
-                <button className="btn btn-outline-secondary">
-                  Sent To...
-                </button>
-                <button className="btn btn-outline-success">
-                  Listing on market
-                </button>
-              </Space>
+            <div className="accordion" id="accordionExample">
+              <div className="accordion-item">
+                <h2 className="accordion-header" id="headingOne">
+                  <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <span className="fw-light">Background:</span> <span className="font-sec ms-auto">Background</span>
+                  </button>
+                </h2>
+                <div id="collapseOne" className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="accordionExample">
+                  <div className="accordion-body">
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div className="fw-light">Equipment:</div>
+                      <span className="font-sec">Equipment</span>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div className="fw-light">Eyes:</div>
+                      <span className="font-sec">Eyes</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-1 d-flex align-items-center justify-content-between">
+              <button className="btn btn-send-nft">
+                Sent to ...
+              </button>
+              <button className="btn btn-listing-nft">
+                List on market
+              </button>
             </div>
           </div>
-        </div>
+        </div >
       );
     });
   }
@@ -103,7 +131,8 @@ const MyInventory = () => {
   return (
     <div className="inventory-page">
       <div className="container">
-        <div className="row mt-5 pb-5">
+        <h2 className="mt-5 inventory-page__ttl">My Inventory</h2>
+        <div className="row mt-3 pb-5">
           {loading ? renderInventoryIds() : renderInventory()}
           {!isConnected && (<h3 className="text-danger">Connect wallet require!</h3>)}
           {(!loading && !inventory.length && isConnected) && (<h3 className="text-secondary">Empty NFTs!</h3>)}
