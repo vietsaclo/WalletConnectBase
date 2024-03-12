@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light">
+    <nav className="navbar navbar-expand-lg navbar-light py-0 shadow">
       <div className="container-fluid">
         <span role="link" className="navbar-brand">
           <img src="/assets/images/logo-kcats.png" alt="logo" className="w-100" />
