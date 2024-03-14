@@ -37,7 +37,7 @@ const MyInventory = () => {
   const renderInventory = () => {
     return inventory.map((v, k) => {
       return (
-        <div key={k} className="col-12 col-md-6 col-lg-3 mb-4">
+        <div key={k} className="col-12 col-md-6 col-lg-4 col-xl-3">
           <div className="card inventory-card">
             <img style={{ minHeight: '324px' }} src={v.Image} className="card-img-top" alt={v.Outfit} />
             <div className="mt-3 mb-1 inventory-card__ttl d-flex align-items-center justify-content-between">
@@ -84,7 +84,7 @@ const MyInventory = () => {
   const renderInventoryIds = () => {
     return inventoryIds.map((v, k) => {
       return (
-        <div key={k} className="col-12 col-md-6 col-lg-3 mb-4">
+        <div key={k} className="col-12 col-md-6 col-lg-4 col-xl-3">
           <div className="card inventory-card">
             <Skeleton.Image className="w-100" style={{ minHeight: '324px', borderRadius: '16px' }} active={true} />
             <div className="mt-3 mb-1 inventory-card__ttl d-flex align-items-center justify-content-between">
@@ -132,7 +132,7 @@ const MyInventory = () => {
     <div className="inventory-page">
       <div className="container">
         <h2 className="mt-5 inventory-page__ttl">My Inventory</h2>
-        <div className="row mt-3 pb-5">
+        <div className="row mt-3 pb-5 g-3">
           {loading ? renderInventoryIds() : renderInventory()}
           {!isConnected && (<h3 className="text-danger">Connect wallet require!</h3>)}
           {(!loading && !inventory.length && isConnected) && (<h3 className="text-secondary">Empty NFTs!</h3>)}

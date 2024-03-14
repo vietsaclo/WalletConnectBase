@@ -62,7 +62,7 @@ body {
 .mint-page {
   height: 100vh;
   max-height: 100vh;
-  background-image: url(../public/assets/images/bg_mint_v3.jpg);
+  background-image: url(../public/assets/images/bg_mint_v3.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position-x: center;
